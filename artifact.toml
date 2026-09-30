@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "مختبر الكيمياء التفاعلي"
+description = "موقع عربي تفاعلي يعرض تجارب كيميائية تعليمية ويتيح محاكاة قانون بويل والعلاقة بين حجم الغاز ودرجة حرارته والعوامل المؤثرة في سرعة التبخر، مع صور التجارب وخطواتها ونتائجها."
+version = "1.0.0"
+id = "artifacts/chemistry-lab"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25738
+
+[services.development]
+run = "pnpm --filter @workspace/chemistry-lab run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/chemistry-lab", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/chemistry-lab/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25738"
+BASE_PATH = "/"
